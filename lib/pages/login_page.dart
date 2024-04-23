@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   void loginMethod() {
-    print('object');
+    debugPrint('Log in button');
   }
 
   @override
@@ -21,12 +21,12 @@ class LoginPage extends StatelessWidget {
           children: [
             Icon(Icons.message,
               size: 60,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             SizedBox(height: 25),
             Text('Welcome back!',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.secondary,
                 fontSize: 18),
             ),
             SizedBox(height: 25),
