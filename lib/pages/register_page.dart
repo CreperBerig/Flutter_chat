@@ -3,23 +3,32 @@ import 'package:flutter/material.dart';
 
 import '../widgets/viev.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   final Function()? togglePage;
 
-  LoginPage({super.key, required this.togglePage});
-  
-  void loginMethod(BuildContext context) async{
-    final authServise = AuthService();
-    debugPrint('Log in button');
-    try {
-      await authServise.singIn(_emailController.text, _passwordController.text);
-    } catch (e) {
-      showDialog(
+  RegisterPage({super.key, required this.togglePage});
+
+  void registerMethod(BuildContext context) {
+    debugPrint('Register button');
+    final _auth = AuthService();
+
+    if (_passwordController.text == _confirmPasswordController.text) {
+      try {
+        _auth.singUp(_emailController.text, _passwordController.text);
+      } catch (e) {
+        showDialog(
         context: context,
         builder: (context) => AlertDialog(title: Text(e.toString()),),
+      );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(title: Text('Password dont match'))
       );
     }
   }
@@ -37,7 +46,7 @@ class LoginPage extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
             ),
             SizedBox(height: 25),
-            Text('Welcome back!',
+            Text('Create new accont',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.secondary,
                 fontSize: 18),
@@ -46,20 +55,22 @@ class LoginPage extends StatelessWidget {
             CustomTextField(hintText: 'Email', obscureText: false, controller: _emailController,),
             SizedBox(height: 10),
             CustomTextField(hintText: 'Password', obscureText: true, controller: _passwordController,),
-            CustomButton(text: 'Login',
-            onTap: () => loginMethod(context),
+            SizedBox(height: 10),
+            CustomTextField(hintText: 'Confirm password', obscureText: true, controller: _confirmPasswordController,),
+            CustomButton(text: 'Register',
+            onTap: () => registerMethod(context),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Dont have an account? ',
+                Text('Alredt have an account? ',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
                 GestureDetector(
                   onTap: togglePage,
-                  child: Text("Register now!",
+                  child: Text("Log in!",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold
