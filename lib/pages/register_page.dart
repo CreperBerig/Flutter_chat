@@ -1,4 +1,4 @@
-import 'package:chat_app/auth/auth_serves.dart';
+import 'package:chat_app/servise/auth/auth_serves.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/viev.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../auth/auth_serves.dart';
+import '../servise/auth/auth_serves.dart';
 import '../pages/settings_page.dart';
 
 class CustomDrawer extends StatelessWidget {
