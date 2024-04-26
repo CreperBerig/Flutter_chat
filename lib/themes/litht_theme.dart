@@ -10,4 +10,5 @@ ThemeData ligthMode = ThemeData(
     inversePrimary: Color.fromRGBO(0, 98, 255, 1),
   ),
   textTheme: GoogleFonts.notoSansDisplayTextTheme(),
+  dividerColor: Colors.transparent
 );

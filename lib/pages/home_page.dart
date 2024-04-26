@@ -1,13 +1,10 @@
-import 'package:chat_app/auth/auth_serves.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/viev.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  void logOut() {
-    final _auth = AuthService();
-    _auth.singOut();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +16,8 @@ class HomePage extends StatelessWidget {
             color: Theme.of(context).colorScheme.tertiary
           ),)
         ),
-        actions: [
-          IconButton(onPressed: logOut, icon: Icon(Icons.logout))
-        ],
       ),
+      drawer: CustomDrawer(),
     );
   }
 }
