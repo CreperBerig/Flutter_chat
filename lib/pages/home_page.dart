@@ -31,22 +31,60 @@ class HomePage extends StatelessWidget {
     return StreamBuilder(
       stream: _chatServis.getUsers(),
       builder: (context, snapshot) {
-          if (snapshot.hasError){
-            return Text('Error!');
-          }
+        if (snapshot.hasError){
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.error,
+                  color: Colors.red,
+                ),
+                SizedBox(height: 10,),
+                Text('Error! data not loading',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                )
+              ],
+            ),
+          );
+        }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Waiting...");
-          }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+                SizedBox(height: 10),
+                Text('Loading data',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.tertiary,
+                  )
+                )
+              ],
+            ),
+          );
+        }
 
-          /*return ListView(
-            children: snapshot.data!.map<Widget>((userData) => _buildUserItem).toList(),
-          );*/
-        },
-      );
+        return ListView(
+          children: snapshot.data!.map<Widget>((userData) => _buildUserItem(userData, context)).toList(),
+        );
+      },
+    );
   }
 
   Widget _buildUserItem(Map<String, dynamic> userData, BuildContext context) {
-    return ListTile();
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: UserTile(
+        email: userData['email'],
+        onTap: () {},
+        ),
+    );
   }
 }
