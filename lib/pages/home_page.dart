@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/chat_page.dart';
 import 'package:chat_app/servise/auth/auth_serves.dart';
 import 'package:chat_app/servise/chat/chat_servise.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import '../widgets/viev.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final ChatServis _chatServis = ChatServis();
+  final ChatService _chatServis = ChatService();
   final AuthService _authService = AuthService();
 
   @override
@@ -15,11 +16,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text(
-          'home page', 
+          'home page',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.tertiary
-          ),)
+              color: Theme.of(context).colorScheme.tertiary
+            ),
+          )
         ),
+        foregroundColor: Theme.of(context).colorScheme.tertiary,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        actions: [
+          SizedBox(width: 40)
+        ],
       ),
       drawer: CustomDrawer(),
       body: _buildUsersList(),
@@ -72,6 +79,7 @@ class HomePage extends StatelessWidget {
         }
 
         return ListView(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           children: snapshot.data!.map<Widget>((userData) => _buildUserItem(userData, context)).toList(),
         );
       },
@@ -79,12 +87,23 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildUserItem(Map<String, dynamic> userData, BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: UserTile(
-        email: userData['email'],
-        onTap: () {},
+    if (userData['email'] != _authService.getCurrentUser()!.email){
+      return Container(
+        child: UserTile(
+          email: userData['email'],
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChatPage(
+                receiverEmail: userData['email'],
+                receiverID: userData['uid'],
+              ))
+            );
+          },
         ),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 }

@@ -31,6 +31,10 @@ class AuthService {
     return await _auth.signOut();
   }
 
+  User? getCurrentUser() {
+    return _auth.currentUser;
+  }
+
   //sign up
   Future<UserCredential> singUp(String email, String password) async {
     try {
